@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <component :is="layout">
+    <router-view/>
+  </component>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {useRoute} from 'vue-router'
+import {computed} from "vue";
+import {PUBLIC_LAYOUT} from "@/constant"
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  setup() {
+    const route = useRoute();
+    console.log("🚀 ~ file: App.vue ~ line 13 ~ route: ", route);
+    return {layout: computed(() => (route.meta.layout || PUBLIC_LAYOUT) + "-layout")}
   }
 }
+//
+// import {fireStoreCore} from "@/config/firebase";
+//
+// export default {
+//   setup() {
+//     async function getTransactions() {
+//       const res = await fireStoreCore.collection('transactions').get();
+//       console.log(res.docs);
+//       const data = res.docs.map(doc => {
+//         return doc.data();
+//       })
+//       console.log(data,"===")
+//     }
+//     getTransactions()
+//   }
+// }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
