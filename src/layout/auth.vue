@@ -1,9 +1,11 @@
 <template>
-  <h1>Auth layout</h1>
+  <Navigation/>
   <slot/>
 </template>
 <script>
+import Navigation from "@/components/Navigation.vue";
 export default {
-  name: 'auth-layout'
+  name: 'auth-layout',
+  components: {Navigation}
 }
 </script>
