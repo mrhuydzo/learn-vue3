@@ -63,11 +63,13 @@
 <script>
 import {ref} from 'vue'
 import {useSignUp} from "@/composables/useSignUp";
+import {useRouter} from "vue-router";
 
 export default {
   name: "RegisterPage",
   setup() {
     const {error,isPending,signUp} = useSignUp();
+    const router = useRouter()
 
     const fullName = ref('')
     const email = ref('')
@@ -75,6 +77,7 @@ export default {
 
     async function onSubmit() {
       await signUp(email.value,password.value,fullName.value)
+      if (!error.value) await router.push('/profile')
     }
 
     return {onSubmit, fullName, email, password,error, isPending}

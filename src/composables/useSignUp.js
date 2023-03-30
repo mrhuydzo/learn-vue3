@@ -18,7 +18,6 @@ async function signUp(email, password, fullName) {
     } finally {
         isPending.value = false;
     }
-
 }
 
 export function useSignUp() {

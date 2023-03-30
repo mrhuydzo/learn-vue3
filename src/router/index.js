@@ -2,6 +2,16 @@ import {createWebHistory, createRouter} from "vue-router";
 // import HomePage from "@/views/index";
 import About from "@/views/About"
 // import Register from "@/views/Register"
+import {fireStoreAuth} from "@/config/firebase";
+
+const requireAuth = (to, from, next) => {
+    const user = fireStoreAuth.currentUser
+    console.log(user, "===");
+
+
+    if (!user) next({name: "Login",params: {}});
+    else next();
+}
 
 const routes = [
     {
@@ -27,6 +37,29 @@ const routes = [
         meta: {
             layout: "auth"
         }
+    },
+    {
+        path: '/logout',
+        component: () => import(/* webpackChunkName: "logout" */ "@/views/Logout"),
+        name: 'Logout',
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        meta: {
+            layout: "default"
+        },
+        component: () => import(/* webpackChunkName: "Profile" */ "@/views/Profile"),
+        beforeEnter: requireAuth
+    },
+    {
+        path: '/new-transaction',
+        name: 'NewTransaction',
+        meta: {
+            layout: "default"
+        },
+        component: () => import(/* webpackChunkName: "NewTransaction" */ "@/views/NewTransaction"),
+        beforeEnter: requireAuth
     },
     {
         path: '/about',
